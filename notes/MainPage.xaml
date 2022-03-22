@@ -6,10 +6,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="#FF434555">
+    Background="#FF30323C"
+    RequestedTheme="Dark">
+   
 
-    <Grid>
-        
-        
+    <Grid >
+        <NavigationView x:Name="navView" Loaded="NavigationView_Loaded" SelectionChanged="NavigationView_SelectionChanged">
+            <NavigationView.MenuItems >
+                <NavigationViewItem Icon="Home" Content="Home" Tag="Home"/>
+                <NavigationViewItem Icon="Favorite" Content="Favorites" Tag="Favorite"/>
+            </NavigationView.MenuItems>
+
+            <ScrollViewer>
+                <Frame  x:Name="ContentFrame"/>
+            </ScrollViewer>
+            
+        </NavigationView>
+    
+
+
+
+
+
     </Grid>
 </Page>

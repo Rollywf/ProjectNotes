@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Notes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +28,55 @@ namespace notes
         public MainPage()
         {
             this.InitializeComponent();
+   //#FF1F1F1F
+            Color BackGroundFTB = 0xFF1F1F1F.ToColor();
+            var t = ApplicationView.GetForCurrentView().TitleBar;
+            t.BackgroundColor = BackGroundFTB;
+            t.ForegroundColor = Colors.White;
+            t.ButtonBackgroundColor = BackGroundFTB;
+            t.ButtonForegroundColor = Colors.White;
+        }
+
+        private void NavigationView_Loaded(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(typeof(HomePage));
+        }
+
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.IsSettingsSelected)
+            { 
+                
+            }
+            else
+            {
+                NavigationViewItem item = args.SelectedItem as NavigationViewItem;
+
+                switch (item.Tag.ToString())
+                {
+                    case "Home":
+                        ContentFrame.Navigate(typeof(HomePage));
+                        break;
+                    case "Favorite":
+                        ContentFrame.Navigate(typeof(FavoritesPage));
+                        break;
+                   
+                    
+                
+                }
+
+            }
+        }
+    }
+
+    static class ExtensionMethods
+    {
+        public static Color ToColor(this uint argb)
+        {
+            return Color.FromArgb((byte)((argb & -16777216) >> 0x18),
+                                  (byte)((argb & 0xff0000) >> 0x10),
+                                  (byte)((argb & 0xff00) >> 8),
+                                  (byte)(argb & 0xff));
         }
     }
 }

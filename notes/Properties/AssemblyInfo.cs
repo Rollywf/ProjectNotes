@@ -5,14 +5,15 @@ using System.Runtime.InteropServices;
 // Общие сведения о сборке можно задать с помощью следующего 
 // атрибутов. Отредактируйте значения этих атрибутов, чтобы изменить
 // сведений о сборке.
-[assembly: AssemblyTitle("notes")]
+[assembly: AssemblyTitle("Notes")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("notes")]
+[assembly: AssemblyProduct("Notes")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //

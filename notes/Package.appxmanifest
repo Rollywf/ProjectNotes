@@ -9,7 +9,7 @@
   <Identity
     Name="027aec2b-44be-4a64-aacd-ac5238164b5a"
     Publisher="CN=rrd20"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="027aec2b-44be-4a64-aacd-ac5238164b5a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -32,7 +32,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="notes.App">
       <uap:VisualElements
-        DisplayName="notes"
+        DisplayName="Notes"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="notes"
