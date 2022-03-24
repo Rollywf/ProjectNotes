@@ -10,7 +10,16 @@
     <Page.Resources>
         <ImageBrush x:Key="ButtonBackground1" ImageSource="/Assets/plusIcon.png" Stretch="UniformToFill"/>
         <ImageSource x:Key="ImageBrushImageSource1">/Assets/plusIconWhite.png</ImageSource>
-
+        <ControlTemplate TargetType="Button" x:Key="btTemplate">
+            <Grid Height="40" Width="100" Margin="-50,-20,-50,-20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="tb1" Text="123" Margin="0,0,76,1" Foreground="White"></TextBlock>
+                <TextBlock x:Name="tb2" Text="222" FontSize="8" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Left" Foreground="#FF898989"/>
+            </Grid>
+        </ControlTemplate>
     </Page.Resources>
 
     <Grid x:Name="G1" Loaded="Grid_Loaded" HorizontalAlignment="Stretch" Width="738" Height="534" VerticalAlignment="Stretch">
@@ -41,6 +50,19 @@
 
         </Border>
         <ListView x:Name="LV1" Grid.Row="1" Height="138" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="149"/>
-        <GridView  x:Name="GV1" Grid.Row="1" Background="#FF23273C"/>
+        <GridView  x:Name="GV1" Grid.Row="1" Background="#FF23273C">
+            <Button x:Name="ButtonTest" Height="40" Width="100" Visibility="Visible">
+                    <Grid Height="40" Width="100" Margin="-50,-20,-50,-20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="tb1" Text="123" Margin="0,0,76,1" Foreground="White"></TextBlock>
+                        <TextBlock x:Name="tb2" Text="222" FontSize="8" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Left" Foreground="#FF898989"/>
+                    </Grid>
+                </Button>
+            
+
+        </GridView>
     </Grid>
 </Page>

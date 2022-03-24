@@ -1,19 +1,120 @@
 ﻿<Page
-    x:Class="Notes.AddPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Notes"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Custom="using:Syncfusion.UI.Xaml.Controls.Input"
+    x:Class="Notes.AddPage"
     mc:Ignorable="d"
     Background="#FF30323C" d:DesignWidth="516" d:DesignHeight="448">
     <Grid HorizontalAlignment="Center" Width="496" Height="428" VerticalAlignment="Center">
-        <TextBlock Text="Заголовок Заметки" Margin="195,99,0,0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="129"></TextBlock>
-        <TextBox x:Name="TBZ" Margin="181,131,0,0" HorizontalAlignment="Left" Width="150" Height="37" VerticalAlignment="Top" Text=""></TextBox>
+        <FlyoutBase.AttachedFlyout>
+            <TimePickerFlyout/>
+        </FlyoutBase.AttachedFlyout>
+        <TextBlock Text="Заголовок Заметки" Margin="195,99,0,0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="129"/>
+        <TextBox x:Name="TBZ" Margin="181,131,0,0" HorizontalAlignment="Left" Width="150" Height="37" VerticalAlignment="Top" Text="" RequestedTheme="Dark"/>
         <Button Content="Записать" Margin="181,298,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click"/>
-        <TextBox x:Name="TBT" HorizontalAlignment="Left" Margin="181,186,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="107"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,168,0,0" Text="Текст Заметки
-                   " TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox x:Name="TBT" HorizontalAlignment="Left" Margin="181,186,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="107" RequestedTheme="Dark"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,168,0,0" Text="Текст Заметки                    " TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <CalendarDatePicker x:Name="CDP" Margin="181,335,0,0" VerticalAlignment="Top" Height="33" Width="150" RequestedTheme="Dark" Visibility="Visible" Background="#FF1D1E24"/>
+        <ToggleSwitch x:Name="TS" Header="Включить уведомление?                       " Margin="336,298,0,0" VerticalAlignment="Top" Height="46" Width="126" FontSize="10" Toggled="TS_Toggled"/>
+        <Button Content="Button" Margin="384,99,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Grid x:Name="TimePickerMy" Margin="181,373,165,22">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox  x:Name="hour" Text="Hour" Height="34" Width="70" VerticalAlignment="Center" Background="#FF1D1E24" PlaceholderForeground="#FF1D1E24" BorderBrush="#FF83848A" HorizontalAlignment="Center" PlaceholderText=""  Foreground="#FFA5A5A7" SelectedIndex="-1">
+                <ComboBoxItem Content="00"></ComboBoxItem>
+                <ComboBoxItem Content="01"></ComboBoxItem>
+                <ComboBoxItem Content="02"></ComboBoxItem>
+                <ComboBoxItem Content="03"></ComboBoxItem>
+                <ComboBoxItem Content="04"></ComboBoxItem>
+                <ComboBoxItem Content="05"></ComboBoxItem>
+                <ComboBoxItem Content="06"></ComboBoxItem>
+                <ComboBoxItem Content="07"></ComboBoxItem>
+                <ComboBoxItem Content="08"></ComboBoxItem>
+                <ComboBoxItem Content="09"></ComboBoxItem>
+                <ComboBoxItem Content="10"></ComboBoxItem>
+                <ComboBoxItem Content="11"></ComboBoxItem>
+                <ComboBoxItem Content="12"></ComboBoxItem>
+                <ComboBoxItem Content="13"></ComboBoxItem>
+                <ComboBoxItem Content="14"></ComboBoxItem>
+                <ComboBoxItem Content="15"></ComboBoxItem>
+                <ComboBoxItem Content="16"></ComboBoxItem>
+                <ComboBoxItem Content="17"></ComboBoxItem>
+                <ComboBoxItem Content="18"></ComboBoxItem>
+                <ComboBoxItem Content="19"></ComboBoxItem>
+                <ComboBoxItem Content="20"></ComboBoxItem>
+                <ComboBoxItem Content="21"></ComboBoxItem>
+                <ComboBoxItem Content="22"></ComboBoxItem>
+                <ComboBoxItem Content="23"></ComboBoxItem>
+                </ComboBox>
+            <ComboBox x:Name="minutes" Text="min" Height="34" Width="80" VerticalAlignment="Center" Background="#FF1D1E24" PlaceholderForeground="#FF1D1E24" BorderBrush="#FF83848A" Grid.Column="1" HorizontalAlignment="Center">
+                <ComboBoxItem Content="00"></ComboBoxItem>
+                <ComboBoxItem Content="01"></ComboBoxItem>
+                <ComboBoxItem Content="02"></ComboBoxItem>
+                <ComboBoxItem Content="03"></ComboBoxItem>
+                <ComboBoxItem Content="04"></ComboBoxItem>
+                <ComboBoxItem Content="05"></ComboBoxItem>
+                <ComboBoxItem Content="06"></ComboBoxItem>
+                <ComboBoxItem Content="07"></ComboBoxItem>
+                <ComboBoxItem Content="08"></ComboBoxItem>
+                <ComboBoxItem Content="09"></ComboBoxItem>
+                <ComboBoxItem Content="10"></ComboBoxItem>
+                <ComboBoxItem Content="11"></ComboBoxItem>
+                <ComboBoxItem Content="12"></ComboBoxItem>
+                <ComboBoxItem Content="13"></ComboBoxItem>
+                <ComboBoxItem Content="14"></ComboBoxItem>
+                <ComboBoxItem Content="15"></ComboBoxItem>
+                <ComboBoxItem Content="16"></ComboBoxItem>
+                <ComboBoxItem Content="17"></ComboBoxItem>
+                <ComboBoxItem Content="18"></ComboBoxItem>
+                <ComboBoxItem Content="19"></ComboBoxItem>
+                <ComboBoxItem Content="20"></ComboBoxItem>
+                <ComboBoxItem Content="21"></ComboBoxItem>
+                <ComboBoxItem Content="22"></ComboBoxItem>
+                <ComboBoxItem Content="23"></ComboBoxItem>
+                <ComboBoxItem Content="24"></ComboBoxItem>
+                <ComboBoxItem Content="25"></ComboBoxItem>
+                <ComboBoxItem Content="26"></ComboBoxItem>
+                <ComboBoxItem Content="27"></ComboBoxItem>
+                <ComboBoxItem Content="28"></ComboBoxItem>
+                <ComboBoxItem Content="29"></ComboBoxItem>
+                <ComboBoxItem Content="30"></ComboBoxItem>
+                <ComboBoxItem Content="31"></ComboBoxItem>
+                <ComboBoxItem Content="32"></ComboBoxItem>
+                <ComboBoxItem Content="33"></ComboBoxItem>
+                <ComboBoxItem Content="34"></ComboBoxItem>
+                <ComboBoxItem Content="35"></ComboBoxItem>
+                <ComboBoxItem Content="36"></ComboBoxItem>
+                <ComboBoxItem Content="37"></ComboBoxItem>
+                <ComboBoxItem Content="38"></ComboBoxItem>
+                <ComboBoxItem Content="39"></ComboBoxItem>
+                <ComboBoxItem Content="40"></ComboBoxItem>
+                <ComboBoxItem Content="41"></ComboBoxItem>
+                <ComboBoxItem Content="42"></ComboBoxItem>
+                <ComboBoxItem Content="43"></ComboBoxItem>
+                <ComboBoxItem Content="44"></ComboBoxItem>
+                <ComboBoxItem Content="45"></ComboBoxItem>
+                <ComboBoxItem Content="46"></ComboBoxItem>
+                <ComboBoxItem Content="47"></ComboBoxItem>
+                <ComboBoxItem Content="48"></ComboBoxItem>
+                <ComboBoxItem Content="49"></ComboBoxItem>
+                <ComboBoxItem Content="50"></ComboBoxItem>
+                <ComboBoxItem Content="51"></ComboBoxItem>
+                <ComboBoxItem Content="52"></ComboBoxItem>
+                <ComboBoxItem Content="53"></ComboBoxItem>
+                <ComboBoxItem Content="54"></ComboBoxItem>
+                <ComboBoxItem Content="55"></ComboBoxItem>
+                <ComboBoxItem Content="56"></ComboBoxItem>
+                <ComboBoxItem Content="57"></ComboBoxItem>
+                <ComboBoxItem Content="58"></ComboBoxItem>
+                <ComboBoxItem Content="59"></ComboBoxItem>
+                
+            </ComboBox>
+        </Grid>
     </Grid>
 
 </Page>

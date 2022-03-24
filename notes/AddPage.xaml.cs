@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,7 +30,11 @@ namespace Notes
         }
         int i;
         private async void Button_Click(object sender, RoutedEventArgs e)
-        {   
+        {
+            
+
+
+
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             StorageFile idfile = await localFolder.GetFileAsync("ids.txt");
             StorageFile allnotes = await localFolder.GetFileAsync("allnotes.txt");
@@ -75,6 +80,30 @@ namespace Notes
             swan.Close();
             sw.Close();
             new Windows.UI.Popups.MessageDialog("Заметка Создана").ShowAsync();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {   
+            new ToastContentBuilder()
+            .AddArgument("action", "viewItemsDueToday")
+            .AddText("Есть дела поважнее!")
+            .AddText(Convert.ToString(CDP.Date.Value.AddMinutes(2)))
+            //.Schedule(CDP.Date.Value);
+            .Schedule(CDP.Date.Value.AddMinutes(2));
+        }
+
+        private void TS_Toggled(object sender, RoutedEventArgs e)
+        {
+            if(TS.IsOn == true)
+            {
+                CDP.Visibility = Visibility.Visible;
+                TimePickerMy.Visibility= Visibility.Visible;
+            }
+            else
+            {
+                CDP.Visibility= Visibility.Collapsed;
+                TimePickerMy.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
