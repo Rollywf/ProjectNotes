@@ -6,4 +6,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="#FF30323C"/>
+    Background="#FF30323C" d:DesignWidth="516" d:DesignHeight="448">
+    <Grid HorizontalAlignment="Center" Width="496" Height="428" VerticalAlignment="Center">
+        <TextBlock Text="Заголовок Заметки" Margin="195,99,0,0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="129"></TextBlock>
+        <TextBox x:Name="TBZ" Margin="181,131,0,0" HorizontalAlignment="Left" Width="150" Height="37" VerticalAlignment="Top" Text=""></TextBox>
+        <Button Content="Записать" Margin="181,298,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click"/>
+        <TextBox x:Name="TBT" HorizontalAlignment="Left" Margin="181,186,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="107"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,168,0,0" Text="Текст Заметки
+                   " TextWrapping="Wrap" VerticalAlignment="Top"/>
+    </Grid>
+
+</Page>
+    
+
+   
+
+ 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -35,13 +36,37 @@ namespace notes
             t.ForegroundColor = Colors.White;
             t.ButtonBackgroundColor = BackGroundFTB;
             t.ButtonForegroundColor = Colors.White;
+
+            ABC();
+
+        }
+
+        public async void ABC()
+        {
+            try
+            {
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                // создаем файл hello.txt
+                StorageFile storageFile = await localFolder.GetFileAsync("ids.txt");
+                StorageFile notes = await localFolder.GetFileAsync("allnotes.txt");
+
+               
+
+            }
+            catch
+            {
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile idfile = await localFolder.CreateFileAsync("ids.txt",CreationCollisionOption.ReplaceExisting);
+                StorageFile notes = await localFolder.CreateFileAsync("allnotes.txt", CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(idfile, "0");
+            }
         }
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
             ContentFrame.Navigate(typeof(HomePage));
         }
-
+     
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
@@ -56,6 +81,7 @@ namespace notes
                 {
                     case "Home":
                         ContentFrame.Navigate(typeof(HomePage));
+                        
                         break;
                     case "Favorite":
                         ContentFrame.Navigate(typeof(FavoritesPage));
@@ -68,6 +94,8 @@ namespace notes
             }
         }
     }
+
+ 
 
     static class ExtensionMethods
     {

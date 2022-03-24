@@ -8,21 +8,21 @@
     mc:Ignorable="d"
     Background="#FF30323C"
     RequestedTheme="Dark">
-   
 
-    <Grid >
-        <NavigationView x:Name="navView" Loaded="NavigationView_Loaded" SelectionChanged="NavigationView_SelectionChanged">
+
+    <Grid Height="1000" Width="1500" >
+        <NavigationView x:Name="navView" Loaded="NavigationView_Loaded" SelectionChanged="NavigationView_SelectionChanged" Height="1000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
             <NavigationView.MenuItems >
                 <NavigationViewItem Icon="Home" Content="Home" Tag="Home"/>
                 <NavigationViewItem Icon="Favorite" Content="Favorites" Tag="Favorite"/>
             </NavigationView.MenuItems>
 
-            <ScrollViewer>
+            <ScrollViewer Height="1000"  Width="1180">
                 <Frame  x:Name="ContentFrame"/>
             </ScrollViewer>
-            
+
         </NavigationView>
-    
+
 
 
 
