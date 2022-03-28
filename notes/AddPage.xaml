@@ -7,25 +7,25 @@
     xmlns:Custom="using:Syncfusion.UI.Xaml.Controls.Input"
     x:Class="Notes.AddPage"
     mc:Ignorable="d"
-    Background="#FF30323C" d:DesignWidth="516" d:DesignHeight="448">
-    <Grid HorizontalAlignment="Center" Width="496" Height="428" VerticalAlignment="Center">
+    Background="#FF30323C" >
+    <Grid HorizontalAlignment="Left" Width="496" Height="428" VerticalAlignment="Top" Margin="0,10,0,0">
         <FlyoutBase.AttachedFlyout>
             <TimePickerFlyout/>
         </FlyoutBase.AttachedFlyout>
-        <TextBlock Text="Заголовок Заметки" Margin="195,99,0,0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="129"/>
-        <TextBox x:Name="TBZ" Margin="181,131,0,0" HorizontalAlignment="Left" Width="150" Height="37" VerticalAlignment="Top" Text="" RequestedTheme="Dark"/>
-        <Button Content="Записать" Margin="181,298,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click"/>
-        <TextBox x:Name="TBT" HorizontalAlignment="Left" Margin="181,186,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="107" RequestedTheme="Dark"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,168,0,0" Text="Текст Заметки                    " TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <CalendarDatePicker x:Name="CDP" Margin="181,335,0,0" VerticalAlignment="Top" Height="33" Width="150" RequestedTheme="Dark" Visibility="Visible" Background="#FF1D1E24"/>
-        <ToggleSwitch x:Name="TS" Header="Включить уведомление?                       " Margin="336,298,0,0" VerticalAlignment="Top" Height="46" Width="126" FontSize="10" Toggled="TS_Toggled"/>
-        <Button Content="Button" Margin="384,99,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
-        <Grid x:Name="TimePickerMy" Margin="181,373,165,22">
+        <TextBlock x:Name="TBlockZ" Text="Заголовок Заметки" Margin="184,93,0,0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150"/>
+        <TextBox x:Name="TBZ" Margin="184,126,0,0" HorizontalAlignment="Left" Width="150" Height="37" VerticalAlignment="Top" Text="" RequestedTheme="Dark"/>
+        <Button x:Name="ButZapis" Content="Записать" Margin="181,298,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click"/>
+        <TextBox x:Name="TBT" HorizontalAlignment="Left" Margin="183,186,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="107" RequestedTheme="Dark"/>
+        <TextBlock x:Name="TBlockT" HorizontalAlignment="Center" Margin="0,167,0,0" Text="Текст Заметки" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
+        <CalendarDatePicker x:Name="CDP" Margin="181,335,0,0" VerticalAlignment="Top" Height="33" Width="150" RequestedTheme="Dark" Visibility="Collapsed" Background="#FF1D1E24"/>
+        <ToggleSwitch x:Name="TS" Header="Включить уведомление?                       " Margin="339,117,0,0" VerticalAlignment="Top" Height="46" Width="120" FontSize="10" Toggled="TS_Toggled"/>
+        <Button x:Name="ButtonNotif" Content="Создать уведомление" Margin="181,298,0,0" VerticalAlignment="Top" Click="Button_Click_1" Width="161" Visibility="Collapsed"/>
+        <Grid x:Name="TimePickerMy" Margin="181,373,165,22" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="7*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox  x:Name="hour" Text="Hour" Height="34" Width="70" VerticalAlignment="Center" Background="#FF1D1E24" PlaceholderForeground="#FF1D1E24" BorderBrush="#FF83848A" HorizontalAlignment="Center" PlaceholderText=""  Foreground="#FFA5A5A7" SelectedIndex="-1">
+            <ComboBox  x:Name="hour" Text="Hour" Height="34" Width="70" VerticalAlignment="Center" Background="#FF1D1E24" PlaceholderForeground="#FF1D1E24" BorderBrush="#FF83848A" HorizontalAlignment="Center" PlaceholderText=""  Foreground="#FFA5A5A7" SelectedIndex="-1" SelectionChanged="hour_SelectionChanged" Visibility="Collapsed">
                 <ComboBoxItem Content="00"></ComboBoxItem>
                 <ComboBoxItem Content="01"></ComboBoxItem>
                 <ComboBoxItem Content="02"></ComboBoxItem>
@@ -50,8 +50,8 @@
                 <ComboBoxItem Content="21"></ComboBoxItem>
                 <ComboBoxItem Content="22"></ComboBoxItem>
                 <ComboBoxItem Content="23"></ComboBoxItem>
-                </ComboBox>
-            <ComboBox x:Name="minutes" Text="min" Height="34" Width="80" VerticalAlignment="Center" Background="#FF1D1E24" PlaceholderForeground="#FF1D1E24" BorderBrush="#FF83848A" Grid.Column="1" HorizontalAlignment="Center">
+            </ComboBox>
+            <ComboBox x:Name="minutes" Text="min" Height="34" Width="80" VerticalAlignment="Center" Background="#FF1D1E24" PlaceholderForeground="#FF1D1E24" BorderBrush="#FF83848A" Grid.Column="1" HorizontalAlignment="Center" Visibility="Collapsed">
                 <ComboBoxItem Content="00"></ComboBoxItem>
                 <ComboBoxItem Content="01"></ComboBoxItem>
                 <ComboBoxItem Content="02"></ComboBoxItem>
@@ -112,9 +112,10 @@
                 <ComboBoxItem Content="57"></ComboBoxItem>
                 <ComboBoxItem Content="58"></ComboBoxItem>
                 <ComboBoxItem Content="59"></ComboBoxItem>
-                
+
             </ComboBox>
         </Grid>
+        <TimePicker x:Name="TP" Margin="135,368,0,0" VerticalAlignment="Top" ClockIdentifier="24HourClock" RequestedTheme="Dark" Visibility="Collapsed"/>
     </Grid>
 
 </Page>

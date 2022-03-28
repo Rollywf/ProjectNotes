@@ -46,19 +46,26 @@ namespace notes
             try
             {
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                // создаем файл hello.txt
+                // создаем файл ids&allnotes.txt
                 StorageFile storageFile = await localFolder.GetFileAsync("ids.txt");
                 StorageFile notes = await localFolder.GetFileAsync("allnotes.txt");
+                // создаем файл idsnotif&allnotif.txt
+                StorageFile storageFile1 = await localFolder.GetFileAsync("idsnotif.txt");
+                StorageFile notifs = await localFolder.GetFileAsync("allnotif.txt");
 
-               
+
 
             }
             catch
-            {
+            {   //для заметок
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
                 StorageFile idfile = await localFolder.CreateFileAsync("ids.txt",CreationCollisionOption.ReplaceExisting);
                 StorageFile notes = await localFolder.CreateFileAsync("allnotes.txt", CreationCollisionOption.ReplaceExisting);
+                //для Уведомлений
+                StorageFile idnotifs = await localFolder.CreateFileAsync("idsnotif.txt");
+                StorageFile notifs = await localFolder.CreateFileAsync("allnotif.txt");
                 await FileIO.WriteTextAsync(idfile, "0");
+                await FileIO.WriteTextAsync(idnotifs, "0");
             }
         }
 
@@ -86,9 +93,12 @@ namespace notes
                     case "Favorite":
                         ContentFrame.Navigate(typeof(FavoritesPage));
                         break;
-                   
-                    
-                
+                    case "Notif":
+                        ContentFrame.Navigate(typeof(NotifPage));
+                        break;
+
+
+
                 }
 
             }

@@ -31,79 +31,108 @@ namespace Notes
         int i;
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
 
 
 
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             StorageFile idfile = await localFolder.GetFileAsync("ids.txt");
             StorageFile allnotes = await localFolder.GetFileAsync("allnotes.txt");
-            i =Convert.ToInt32(await FileIO.ReadTextAsync(idfile));
+            i = Convert.ToInt32(await FileIO.ReadTextAsync(idfile));
             i++;
             string textZ = TBZ.Text;
             string text = TBT.Text;
             // получаем локальную папку 
-           
+
             // создаем файл hello.txt
-            StorageFile helloFile = await localFolder.CreateFileAsync(i+textZ+".txt",
+            StorageFile helloFile = await localFolder.CreateFileAsync(i + textZ + ".txt",
                                                 CreationCollisionOption.ReplaceExisting);
 
-            await FileIO.AppendTextAsync(allnotes,i+textZ+"\n");
-            await FileIO.AppendTextAsync(helloFile,"Заголовок заметки:"+textZ);
+            await FileIO.AppendTextAsync(allnotes, i + textZ + "\n");
+            await FileIO.AppendTextAsync(helloFile, "Заголовок заметки: " + textZ);
             await FileIO.AppendTextAsync(helloFile, "\n");
-            await FileIO.AppendTextAsync(helloFile, "" + text);
-            
+            await FileIO.AppendTextAsync(helloFile, "Текст заметки: " + text);
+
             await FileIO.WriteTextAsync(idfile, i.ToString());
 
             await new Windows.UI.Popups.MessageDialog("Файл создан и сохранен").ShowAsync();
-        
-        
+
+
         }
 
-        private void Button_Click1(object sender,RoutedEventArgs e)
-        {
+        
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        {  int hours = Convert.ToInt32(TP.Time.Hours);
+          int  minuts = Convert.ToInt32(TP.Time.Minutes);
+            int years = Convert.ToInt32(CDP.Date.Value.Year);
+            int months = Convert.ToInt32(CDP.Date.Value.Month);
+            int days = Convert.ToInt32(CDP.Date.Value.Day);
+            DateTime datenotif = new DateTime(year: years, month: months, day: days, hour: hours, minute: minuts, second:0);
+            //string a = hour.SelectedValue.ToString();
             string textZ = TBZ.Text;
             string text = TBT.Text;
-            StreamReader sri = new StreamReader("ids.txt");
-            i = Convert.ToInt32(sri.ReadToEnd());
-            sri.Close();
-            i++;
-            StreamWriter swid = new StreamWriter("ids.txt");
-            StreamWriter sw = new StreamWriter(i+textZ+".txt");
-            StreamWriter swan = new StreamWriter("allnotes.txt");
-
-            swan.WriteLine(i + textZ);
-            sw.Write("Заголовок заметки:" + textZ+"\n"+"Текст заметки:"+text);
-            swid.Write(i);
-
-            swid.Close();
-            swan.Close();
-            sw.Close();
-            new Windows.UI.Popups.MessageDialog("Заметка Создана").ShowAsync();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {   
             new ToastContentBuilder()
             .AddArgument("action", "viewItemsDueToday")
-            .AddText("Есть дела поважнее!")
-            .AddText(Convert.ToString(CDP.Date.Value.AddMinutes(2)))
-            //.Schedule(CDP.Date.Value);
-            .Schedule(CDP.Date.Value.AddMinutes(2));
+            .AddText(textZ)
+            .AddText(text)
+            .AddText(DateTime.Now.ToString())
+            .Schedule(datenotif, toast =>
+            {
+                toast.Tag = "1";
+            });
+
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            StorageFile idfile = await localFolder.GetFileAsync("idsnotif.txt");
+            StorageFile allnotes = await localFolder.GetFileAsync("allnotif.txt");
+            i = Convert.ToInt32(await FileIO.ReadTextAsync(idfile));
+            i++;
+            // получаем локальную папку 
+
+            // создаем файл hello.txt
+            StorageFile helloFile = await localFolder.CreateFileAsync(i + textZ + ".txt",
+                                                CreationCollisionOption.ReplaceExisting);
+
+            await FileIO.AppendTextAsync(allnotes, i + textZ + "\n");
+            await FileIO.AppendTextAsync(helloFile, "Заголовок Уведомления: " + textZ);
+            await FileIO.AppendTextAsync(helloFile, "\n");
+            await FileIO.AppendTextAsync(helloFile, "Текст Уведомления: " + text);
+
+            await FileIO.WriteTextAsync(idfile, i.ToString());
+
+            await new Windows.UI.Popups.MessageDialog("Уведомление создано и сохранено").ShowAsync();
+
         }
 
         private void TS_Toggled(object sender, RoutedEventArgs e)
         {
-            if(TS.IsOn == true)
+            if (TS.IsOn == true)
             {
                 CDP.Visibility = Visibility.Visible;
-                TimePickerMy.Visibility= Visibility.Visible;
+               // TimePickerMy.Visibility = Visibility.Visible;
+                TP.Visibility = Visibility.Visible;
+                ButtonNotif.Visibility = Visibility.Visible;
+                ButZapis.Visibility = Visibility.Collapsed;
+                TBlockZ.Text = "Заголовок Уведомления";
+                TBlockT.Text = "Текст Уведомления";
             }
             else
             {
-                CDP.Visibility= Visibility.Collapsed;
-                TimePickerMy.Visibility = Visibility.Collapsed;
+                CDP.Visibility = Visibility.Collapsed;
+                //TimePickerMy.Visibility = Visibility.Collapsed;
+                TP.Visibility = Visibility.Collapsed;
+                ButtonNotif.Visibility = Visibility.Collapsed;
+                ButZapis.Visibility = Visibility.Visible;
+
+                TBlockZ.Text = "Заголовок Заметки";
+                TBlockT.Text = "Текст Заметки";
             }
         }
+
+        private void hour_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
     }
 }
+
