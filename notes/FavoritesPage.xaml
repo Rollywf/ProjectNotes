@@ -8,7 +8,58 @@
     mc:Ignorable="d"
     Background="#FF212225">
 
-    <Grid>
+    <Page.Resources>
+        <ImageBrush x:Key="ButtonBackground1" ImageSource="/Assets/plusIcon.png" Stretch="UniformToFill"/>
+        <ImageSource x:Key="ImageBrushImageSource1">/Assets/plusIconWhite.png</ImageSource>
+        <DataTemplate x:Key="namedColorItemGridTemplate" x:DataType="local:Notes">
+            <Grid Height="109" Width="230" Tapped="Grid_Tapped">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Rectangle Width="96" Height="96"  Grid.ColumnSpan="3" />
+                <!-- Name -->
+
+                <Border Background="#AAFFFFFF" Grid.ColumnSpan="2" Height="20" VerticalAlignment="Center" Tapped="Border_Tapped">
+                    <TextBlock Text="{x:Bind Path=Name}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Border>
+                <!--Not1-->
+                <Border Background="Gray" Grid.Row="2" Grid.ColumnSpan="3">
+                    <TextBlock Text="{x:Bind Path=Not1}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11"/>
+                </Border>
+                <Button Content="A" Height="20" Width="30" FontSize="4" Foreground="#FF131010" Grid.Column="1" Background="#33FF2727" Click="Button_Click_1">
+                    <Button.Flyout>
+                        <MenuFlyout x:Name="menf">
+                            <MenuFlyoutItem x:Name="Unfavorite" Text="Unfavorite" Icon="Unfavorite" Click="MenuFlyoutItem_Click" >
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Copy" Icon="Copy" />
+                            <MenuFlyoutItem Text="Delete" Icon="Delete" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem Text="Change" />
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid x:Name="G1" Loaded="Grid_Loaded" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="1080">
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid Background="#FF3B3E49" Height="50" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        </Border>
+        <GridView x:Name="colorsGridView" ItemTemplate="{StaticResource namedColorItemGridTemplate}" Margin="10,10,10,10" Grid.Row="1" ItemClick="colorsGridView_ItemClick" Tapped="colorsGridView_Tapped"/>
 
     </Grid>
 </Page>

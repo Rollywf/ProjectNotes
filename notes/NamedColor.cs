@@ -11,15 +11,17 @@ namespace Notes
 
     class Notes
     {
-        public Notes(string NoteZ, string NoteT)
+        public Notes(string NoteZ, string NoteT,string TextForFavorite)
         {
             Name = NoteZ;
             Not1 = NoteT;
+            TextFav = TextForFavorite;
         }
 
         public string Name { get; set; }
 
         public string Not1 { get; set; }
 
+        public string TextFav { get; set; }
     }
 }

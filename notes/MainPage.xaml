@@ -11,14 +11,14 @@
 
 
     <Grid >
-        <NavigationView x:Name="navView" Loaded="NavigationView_Loaded" SelectionChanged="NavigationView_SelectionChanged" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+        <NavigationView  x:Name="navView" Loaded="NavigationView_Loaded" SelectionChanged="NavigationView_SelectionChanged" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
             <NavigationView.MenuItems >
                 <NavigationViewItem Icon="Home" Content="Home" Tag="Home"/>
                 <NavigationViewItem Icon="Favorite" Content="Favorites" Tag="Favorite"/>
                 <NavigationViewItem Icon="Message" Content="Notifications" Tag="Notif"/>
             </NavigationView.MenuItems>
 
-            <ScrollViewer Height="1000"  Width="1180">
+            <ScrollViewer>
                 <Frame  x:Name="ContentFrame"/>
             </ScrollViewer>
 

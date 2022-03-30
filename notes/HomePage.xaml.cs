@@ -29,6 +29,7 @@ namespace Notes
     /// </summary>
     public sealed partial class HomePage : Page
     {
+        List<IconFavorite> iconf = new List<IconFavorite>();
         List<Notes> NamedColors = new List<Notes>();
         
         public HomePage()
@@ -36,8 +37,6 @@ namespace Notes
             this.InitializeComponent();
             Abc();
         }
-
-
         
 
         private void butadd_Click(object sender, RoutedEventArgs e)
@@ -45,7 +44,9 @@ namespace Notes
             Frame.Navigate(typeof(AddPage));
         }
 
-        public async void Abc() {
+
+        public async void Abc() 
+        {
             try
             {
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
@@ -67,7 +68,7 @@ namespace Notes
                     //found = notetext.IndexOf(":");     
                     //Console.WriteLine("   {0}", file.Substring(found + 1));
                     // notetext = notetext.Substring(found+1);
-
+                    
                     string notet = await FileIO.ReadTextAsync(note);
                     // notetext = notetext.Replace("Заголовок заметки:", "");
                     notet = notet.Replace("Заголовок заметки:", "");
@@ -77,7 +78,7 @@ namespace Notes
 
                     int ind = 0;
                     notetext[ind] = notetext[ind].Replace("Заголовок заметки: ", "");
-                    NamedColors.Add(new Notes(notetext[ind], notet));
+                    NamedColors.Add(new Notes(notetext[ind], notet,textForF));
                     ind++;
 
 
@@ -86,7 +87,7 @@ namespace Notes
             }
             catch { }
         }
-  
+        string textForF;
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
@@ -148,29 +149,67 @@ namespace Notes
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
+           
+        }
+        
+
+        private void Border_Tapped(object sender, TappedRoutedEventArgs e)
+        {
             Frame.Navigate(typeof(OpenedNote));
         }
-        public double i;
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void downbtn_Click(object sender, RoutedEventArgs e)
         {
-            if (colorsGridView.Visibility == Visibility.Visible) 
+            if (colorsGridView.Visibility == Visibility.Visible)
             {
-                
-                i=colorsGridView.Height;
-                colorsGridView.Height = 0;
+
+              //  i = colorsGridView.Height;
+               // colorsGridView.Height = 0;
                 colorsGridView.Visibility = Visibility.Collapsed;
-                upbutton.Visibility = Visibility.Visible;
-                dropbutton.Visibility = Visibility.Collapsed;
+                upbtn.Visibility = Visibility.Visible;
+                downbtn.Visibility = Visibility.Collapsed;
 
             }
             else
             {
-                colorsGridView.Height = i;
+                //colorsGridView.Height = i;
                 colorsGridView.Visibility = Visibility.Visible;
-                upbutton.Visibility = Visibility.Collapsed;
-                dropbutton.Visibility = Visibility.Visible;
+                upbtn.Visibility = Visibility.Collapsed;
+                downbtn.Visibility = Visibility.Visible;
             }
         }
 
+        public void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void downbtn1_Click(object sender, RoutedEventArgs e)
+        {
+            if (GridViewNotifications.Visibility == Visibility.Visible)
+            {
+
+                //  i = colorsGridView.Height;
+                // colorsGridView.Height = 0;
+                GridViewNotifications.Visibility = Visibility.Collapsed;
+                upbtn1.Visibility = Visibility.Visible;
+                downbtn1.Visibility = Visibility.Collapsed;
+
+            }
+            else
+            {
+                //colorsGridView.Height = i;
+                GridViewNotifications.Visibility = Visibility.Visible;
+                Show();
+                upbtn1.Visibility = Visibility.Collapsed;
+                downbtn1.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

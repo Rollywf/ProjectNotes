@@ -132,6 +132,7 @@
     <Compile Include="FavoritesPage.xaml.cs">
       <DependentUpon>FavoritesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IconFavorite.cs" />
     <Compile Include="NotifPage.xaml.cs">
       <DependentUpon>NotifPage.xaml</DependentUpon>
     </Compile>
