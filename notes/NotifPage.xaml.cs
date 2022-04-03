@@ -57,8 +57,6 @@ namespace Notes
 
                 notetext.IndexOf("Заголовок Уведомления: ");
                  notetext.Remove("Текст Уведомления: ");
-
-                string textForF = "Favorite";
                 string notet = await FileIO.ReadTextAsync(note);
                 notet = notet.Replace("Заголовок Уведомления:", "");
                 foud = notet.IndexOf("Текст Уведомления: ");
@@ -66,7 +64,7 @@ namespace Notes
 
                 int ind = 0;
                 notetext[ind]=notetext[ind].Replace("Заголовок Уведомления: ", "");
-                NamedColors.Add(new Notes(notetext[ind], notet, textForF));
+                NamedColors.Add(new Notes(notetext[ind], notet,ind));
                 ind++;
 
                 

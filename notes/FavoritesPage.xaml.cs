@@ -23,8 +23,7 @@ namespace Notes
     /// </summary>
     public sealed partial class FavoritesPage : Page
     {
-        string textForF = "Favorite";
-        List<Notes> NamedColors = new List<Notes>();
+        List<Notes> listNotes = new List<Notes>();
         public FavoritesPage()
         {
             this.InitializeComponent();
@@ -64,12 +63,12 @@ namespace Notes
 
                     int ind = 0;
                     notetext[ind] = notetext[ind].Replace("Заголовок заметки: ", "");
-                    NamedColors.Add(new Notes(notetext[ind], notet, textForF));
+                    listNotes.Add(new Notes(notetext[ind], notet,ind));
                     ind++;
 
 
                 }
-                colorsGridView.ItemsSource = NamedColors;
+                colorsGridView.ItemsSource = listNotes;
             }
             catch { }
         }
@@ -160,7 +159,6 @@ namespace Notes
 
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            textForF = "Unfavorite";
         }
 
         private void colorsGridView_Tapped(object sender, TappedRoutedEventArgs e)
@@ -170,7 +168,7 @@ namespace Notes
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            
         }
     }
 }

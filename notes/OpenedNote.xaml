@@ -7,13 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    RequestedTheme="Dark">
+    RequestedTheme="Dark" Loaded="Page_Loaded">
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Text="Заголовок заметки" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="141" Margin="170,165,0,0"/>
-        <TextBox HorizontalAlignment="Left" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="145" Margin="170,191,0,0"/>
+        <TextBox x:Name="TitleNote" HorizontalAlignment="Left" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="145" Margin="170,191,0,0"/>
         <TextBlock HorizontalAlignment="Left" Text="Текст заметки" TextWrapping="Wrap" VerticalAlignment="Top" Margin="192,232,0,0"/>
-        <TextBox HorizontalAlignment="Left" Margin="167,256,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="120" Width="145"/>
+        <TextBox x:Name="TextNote" HorizontalAlignment="Left" Margin="167,256,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="120" Width="145"/>
         <Button x:Name="SaveButton" Content="Save" VerticalAlignment="Top" Width="61" Click="Button_Click_Listener" Margin="167,381,0,0" HorizontalAlignment="Left"/>
         <Button x:Name="DeleteButton" Content="Delete" VerticalAlignment="Top" Click="Button_Click_Listener" Margin="206,418,0,0" HorizontalAlignment="Left"/>
         <Button x:Name="CancelButton" Content="Cancel" VerticalAlignment="Top" Click="Button_Click_Listener" Margin="251,381,0,0" HorizontalAlignment="Left"/>

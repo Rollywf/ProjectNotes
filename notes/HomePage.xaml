@@ -8,11 +8,13 @@
     x:Class="Notes.HomePage"
     mc:Ignorable="d"
     Background="#FF30323C"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+   
     <Page.Resources>
+        
         <ImageBrush x:Key="ButtonBackground1" ImageSource="/Assets/plusIcon.png" Stretch="UniformToFill"/>
         <ImageSource x:Key="ImageBrushImageSource1">/Assets/plusIconWhite.png</ImageSource>
-        <DataTemplate x:Key="namedColorItemGridTemplate" x:DataType="local:Notes">
-            <Grid Height="109" Width="230" Tapped="Grid_Tapped">
+        <DataTemplate x:Key="namedNoteGridTemplate"  x:DataType="local:Notes">
+            <Grid x:Name="Root" Height="109" Width="230" Tapped="Grid_Tapped" Loaded="Root_Loaded">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
@@ -25,17 +27,17 @@
                 <Rectangle Width="96" Height="96"  Grid.ColumnSpan="3" />
                 <!-- Name -->
 
-                <Border Background="#AAFFFFFF" Grid.ColumnSpan="2" Height="20" VerticalAlignment="Center" Tapped="Border_Tapped">
-                    <TextBlock Text="{x:Bind Path=Name}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Border Background="#AAFFFFFF" Grid.ColumnSpan="2" Height="20" VerticalAlignment="Center">
+                    <TextBlock x:Name="nameNote" Text="{x:Bind Path=Title}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Tapped="nameNote_Tapped"/>
                 </Border>
                 <!--Not1-->
                 <Border Background="Gray" Grid.Row="2" Grid.ColumnSpan="3">
-                    <TextBlock Text="{x:Bind Path=Not1}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11"/>
+                    <TextBlock x:Name="textNote" Text="{x:Bind Path=Text}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11" Loaded="textNote_Loaded"/>
                 </Border>
-                <Button Content="A" Height="20" Width="30" FontSize="4" Foreground="#FF131010" Grid.Column="1" Background="#33FF2727" Click="Button_Click_1">
+                <Button Loaded="butadd_Loaded" x:Name="btngrid" Content="A" Height="20" Width="30" FontSize="4" Foreground="#FF131010" Grid.Column="1" Background="#33FF2727" Click="Button_Click_1">
                     <Button.Flyout >
                         <MenuFlyout x:Name="menf">
-                            <MenuFlyoutItem x:Name="Favorite" Text="{x:Bind Path=TextFav}" Icon="Favorite" Click="MenuFlyoutItem_Click" >
+                            <MenuFlyoutItem x:Name="Favorite" Text="Favorite" Icon="Favorite" Click="MenuFlyoutItem_Click" Loaded="Favorite_Loaded" >
                             </MenuFlyoutItem>
                             <MenuFlyoutItem Text="Copy" Icon="Copy" />
                             <MenuFlyoutItem Text="Delete" Icon="Delete" />
@@ -59,7 +61,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Border Background="#FF434759">
-            <Button x:Name="butadd"  Height="40" Click="butadd_Click" Tag="add" Margin="0,0,0,0" Width="101" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button  x:Name="butadd"  Height="40" Click="butadd_Click" Tag="add" Margin="0,0,0,0" Width="101" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50"/>
@@ -73,7 +75,7 @@
             </Border>
         </Grid>
 
-        <ListView Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListView x:Name="MyLV" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible">
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40"/>
@@ -91,47 +93,9 @@
                     </Button.Background>
                 </Button>
             </Grid>
-            
-            <GridView x:Name="colorsGridView"  Margin="0,24,0,515" HorizontalAlignment="Left" VerticalAlignment="Top">
 
-                <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Notes">
-                    <Grid Height="109" Width="230" Tapped="Grid_Tapped">
+            <GridView x:Name="colorsGridView" ItemTemplate="{StaticResource namedNoteGridTemplate}" Margin="0,24,0,515" HorizontalAlignment="Left" VerticalAlignment="Top">               
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="30"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Rectangle Width="96" Height="96"  Grid.ColumnSpan="3" />
-                        <!-- Name -->
-
-                        <Border Background="#AAFFFFFF" Grid.ColumnSpan="2" Height="20" VerticalAlignment="Center" Tapped="Border_Tapped">
-                            <TextBlock Text="{x:Bind Path=Name}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        </Border>
-                        <!--Not1-->
-                        <Border Background="Gray" Grid.Row="2" Grid.ColumnSpan="3">
-                            <TextBlock Text="{x:Bind Path=Not1}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11"/>
-                        </Border>
-                        <Button x:Name="flout" Content="A" Height="20" Width="30" FontSize="4" Foreground="#FF131010" Grid.Column="1" Background="#33FF2727" Click="Button_Click_1">
-                            <Button.Flyout >
-                                <MenuFlyout x:Name="menf">
-                                    <MenuFlyoutItem x:Name="Favorite" Text="{x:Bind Path=TextFav}" Icon="Favorite" Click="MenuFlyoutItem_Click" >
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Copy" Icon="Copy" />
-                                    <MenuFlyoutItem Text="Delete" Icon="Delete" />
-                                    <MenuFlyoutSeparator />
-                                    <MenuFlyoutItem Text="Change" />
-                                </MenuFlyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Grid>
-
-                </DataTemplate>
-                </GridView.ItemTemplate>
             </GridView>
 
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -151,7 +115,7 @@
                     </Button.Background>
                 </Button>
             </Grid>
-            <GridView x:Name="GridViewNotifications" ItemTemplate="{StaticResource namedColorItemGridTemplate}"   ItemClick="colorsGridView_ItemClick" Margin="0,563,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <!--<GridView x:Name="GridViewNotifications" ItemTemplate="{StaticResource namedNoteGridTemplate}"   ItemClick="colorsGridView_ItemClick" Margin="0,563,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
 
         </ListView>
 

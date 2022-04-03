@@ -45,11 +45,11 @@
                 <!-- Name -->
 
                 <Border Background="#AAFFFFFF" Grid.ColumnSpan="3" Height="20" VerticalAlignment="Top" Tapped="Border_Tapped">
-                    <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14"/>
+                    <TextBlock Text="{x:Bind Path=Title}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14"/>
                 </Border>
                 <!--Not1-->
                 <Border Background="Gray" Grid.Row="2" Grid.ColumnSpan="3">
-                    <TextBlock Text="{x:Bind Not1}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11"/>
+                    <TextBlock Text="{x:Bind Path=Text}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11"/>
                 </Border>
 
             </Grid>

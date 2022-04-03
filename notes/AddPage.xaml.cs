@@ -49,13 +49,14 @@ namespace Notes
                                                 CreationCollisionOption.ReplaceExisting);
 
             await FileIO.AppendTextAsync(allnotes, i + textZ + "\n");
+            await FileIO.AppendTextAsync(helloFile, "ID заметки: " + i +"\n");
             await FileIO.AppendTextAsync(helloFile, "Заголовок заметки: " + textZ);
             await FileIO.AppendTextAsync(helloFile, "\n");
             await FileIO.AppendTextAsync(helloFile, "Текст заметки: " + text);
 
             await FileIO.WriteTextAsync(idfile, i.ToString());
 
-            await new Windows.UI.Popups.MessageDialog("Файл создан и сохранен").ShowAsync();
+            //await new Windows.UI.Popups.MessageDialog("Файл создан и сохранен").ShowAsync();
 
 
         }
