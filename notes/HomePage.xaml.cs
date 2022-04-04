@@ -35,7 +35,7 @@ namespace Notes
         public HomePage()
         {
             this.InitializeComponent();
-            Abc();
+            LoadNotes();
         }
 
 
@@ -45,8 +45,8 @@ namespace Notes
         }
 
 
-        public async void Abc()
-        {
+        public async void LoadNotes()
+        {//
             try
             {
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;

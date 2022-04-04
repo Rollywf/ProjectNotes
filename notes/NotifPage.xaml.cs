@@ -44,33 +44,36 @@ namespace Notes
         }
 
         public async void Abc() {
-            
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile allnotif = await localFolder.GetFileAsync("allnotif.txt");
-            List<string> notename = (await FileIO.ReadLinesAsync(allnotif)).ToList();
-            int foud = 0;
+             try
+            {
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile allnotif = await localFolder.GetFileAsync("allnotif.txt");
+                List<string> notename = (await FileIO.ReadLinesAsync(allnotif)).ToList();
+                int foud = 0;
+           
+                foreach (string file in notename)
+                {
+                    StorageFile note = await localFolder.GetFileAsync(file + ".txt");
+                    List<string> notetext = (await FileIO.ReadLinesAsync(note)).ToList();
 
-            foreach (string file in notename)
-            {      
-                   StorageFile note = await localFolder.GetFileAsync(file + ".txt");
-                 List<string> notetext = (await FileIO.ReadLinesAsync(note)).ToList();
+                    notetext.IndexOf("Заголовок Уведомления: ");
+                    notetext.Remove("Текст Уведомления: ");
+                    string notet = await FileIO.ReadTextAsync(note);
+                    notet = notet.Replace("Заголовок Уведомления:", "");
+                    foud = notet.IndexOf("Текст Уведомления: ");
+                    notet = notet.Substring(foud + 18);
 
-                notetext.IndexOf("Заголовок Уведомления: ");
-                 notetext.Remove("Текст Уведомления: ");
-                string notet = await FileIO.ReadTextAsync(note);
-                notet = notet.Replace("Заголовок Уведомления:", "");
-                foud = notet.IndexOf("Текст Уведомления: ");
-                notet = notet.Substring(foud + 18);
+                    int ind = 0;
+                    notetext[ind] = notetext[ind].Replace("Заголовок Уведомления: ", "");
+                    NamedColors.Add(new Notes(notetext[ind], notet, ind));
+                    ind++;
 
-                int ind = 0;
-                notetext[ind]=notetext[ind].Replace("Заголовок Уведомления: ", "");
-                NamedColors.Add(new Notes(notetext[ind], notet,ind));
-                ind++;
 
-                
+                }
+
+                colorsGridView.ItemsSource = NamedColors;
             }
-            
-           colorsGridView.ItemsSource = NamedColors;
+            catch { }
         }
 
 

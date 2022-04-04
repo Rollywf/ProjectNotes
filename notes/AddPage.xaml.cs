@@ -90,17 +90,22 @@ namespace Notes
             // получаем локальную папку 
 
             // создаем файл hello.txt
-            StorageFile helloFile = await localFolder.CreateFileAsync(i + textZ + ".txt",
+            StorageFile helloFile = await localFolder.CreateFileAsync("notif"+i + textZ + ".txt",
                                                 CreationCollisionOption.ReplaceExisting);
 
-            await FileIO.AppendTextAsync(allnotes, i + textZ + "\n");
+            await FileIO.AppendTextAsync(allnotes,"notif"+ i + textZ + "\n");
             await FileIO.AppendTextAsync(helloFile, "Заголовок Уведомления: " + textZ);
             await FileIO.AppendTextAsync(helloFile, "\n");
-            await FileIO.AppendTextAsync(helloFile, "Текст Уведомления: " + text);
+            await FileIO.AppendTextAsync(helloFile, "Текст Уведомления: " + text + "\n");
+            await FileIO.AppendTextAsync(helloFile, "Часы Уведомления: " + hours+ "\n");
+            await FileIO.AppendTextAsync(helloFile, "Минуты Уведомления: " + minuts + "\n");
+            await FileIO.AppendTextAsync(helloFile, "День Уведомления: " + days + "\n");
+            await FileIO.AppendTextAsync(helloFile, "Месяц Уведомления: " + months + "\n");
+            await FileIO.AppendTextAsync(helloFile, "Год Уведомления: " + years + "\n");
 
             await FileIO.WriteTextAsync(idfile, i.ToString());
-
-            await new Windows.UI.Popups.MessageDialog("Уведомление создано и сохранено").ShowAsync();
+            Frame.GoBack();
+            //await new Windows.UI.Popups.MessageDialog("Уведомление создано и сохранено").ShowAsync();
 
         }
 
