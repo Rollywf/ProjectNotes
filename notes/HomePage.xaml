@@ -10,10 +10,10 @@
     Background="#FF30323C"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
    
     <Page.Resources>
-        
+        <local:FavoriteCommand x:Key="favoriteCommand"/>
         <ImageBrush x:Key="ButtonBackground1" ImageSource="/Assets/plusIcon.png" Stretch="UniformToFill"/>
         <ImageSource x:Key="ImageBrushImageSource1">/Assets/plusIconWhite.png</ImageSource>
-        <DataTemplate x:Key="namedNoteGridTemplate"  x:DataType="local:Notes">
+        <!--<DataTemplate x:Key="namedNoteGridTemplate" x:DataType="local:NotesTemp">
             <Grid x:Name="Root" Height="109" Width="230" Tapped="Grid_Tapped" Loaded="Root_Loaded">
 
                 <Grid.ColumnDefinitions>
@@ -25,12 +25,12 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Rectangle Width="96" Height="96"  Grid.ColumnSpan="3" />
-                <!-- Name -->
+                --><!-- Name --><!--
 
                 <Border Background="#AAFFFFFF" Grid.ColumnSpan="2" Height="20" VerticalAlignment="Center">
                     <TextBlock x:Name="nameNote" Text="{x:Bind Path=Title}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Tapped="nameNote_Tapped"/>
                 </Border>
-                <!--Not1-->
+                --><!--Not1--><!--
                 <Border Background="Gray" Grid.Row="2" Grid.ColumnSpan="3">
                     <TextBlock x:Name="textNote" Text="{x:Bind Path=Text}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11" Loaded="textNote_Loaded"/>
                 </Border>
@@ -39,16 +39,12 @@
                         <MenuFlyout x:Name="menf">
                             <MenuFlyoutItem x:Name="Favorite" Text="Favorite" Icon="Favorite" Click="MenuFlyoutItem_Click" Loaded="Favorite_Loaded" >
                             </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Copy" Icon="Copy" />
-                            <MenuFlyoutItem Text="Delete" Icon="Delete" />
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem Text="Change" />
                         </MenuFlyout>
                     </Button.Flyout>
                 </Button>
             </Grid>
 
-        </DataTemplate>
+        </DataTemplate>-->
     </Page.Resources>
 
     <Grid x:Name="G1" Loaded="Grid_Loaded">
@@ -75,7 +71,58 @@
             </Border>
         </Grid>
 
-        <ListView x:Name="MyLV" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible">
+
+        <GridView x:Name="ListOfNotes"
+            ItemsSource="{x:Bind NotesTemp}" Grid.Row="1">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="local:NotesTemp">
+                    <StackPanel Width="264" Height="120" Padding="12" Orientation="Horizontal" AutomationProperties.Name="{x:Bind Title}">
+                        <StackPanel Margin="16,1,0,0" RightTapped="StackPanel_RightTapped">
+                            <StackPanel.ContextFlyout>
+                                <MenuFlyout x:Name="menfav">
+                                    <MenuFlyoutItem x:Name="Favorite" Text="Favorite" Icon="Favorite" Click="MenuFlyoutItem_Click" Loaded="Favorite_Loaded" >
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </StackPanel.ContextFlyout>
+                            <TextBlock x:Name="TextBlockTitle" Width="176" Margin="0,0,0,2" TextWrapping="WrapWholeWords" TextTrimming="Clip" Text="{x:Bind Title}" Height="Auto" Tapped="TextBlockTitle_Tapped"/>
+                            <TextBlock Width="176" Height="Auto" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" TextWrapping="WrapWholeWords" TextTrimming="Clip" Text="{x:Bind Text}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <!--<local:NotesUserControl NotesTemp="{x:Bind Mode=OneWay}" />-->
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemContainerStyle>
+                 <!--The PodcastUserControl will entirely fill the ListView item and handle tabbing within itself.--> 
+                <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="IsTabStop" Value="False"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+        </GridView>
+
+
+        <!--<GridView x:Name="GVNotes" ItemsSource="{x:Bind NotesTemp}" Grid.Row="1">
+            <GridView.ItemTemplate>
+                <DataTemplate x:Name="IconTextTemplate2" x:DataType="local:NotesTemp">
+                    <local:NotesUserControl NotesTemp="{x:Bind Mode=OneWay}" />
+                    --><!--<StackPanel Width="264" Height="120" Padding="12" Orientation="Horizontal" AutomationProperties.Name="{x:Bind Title}">
+
+                        <StackPanel Margin="16,1,0,0">
+                            <TextBlock Width="176" Margin="0,0,0,2" TextWrapping="WrapWholeWords" TextTrimming="Clip" Text="{x:Bind Title}" Height="Auto"/>
+                            <TextBlock Width="176" Height="Auto" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" TextWrapping="WrapWholeWords" TextTrimming="Clip" Text="{x:Bind Text}" />
+                        </StackPanel>
+                    </StackPanel>--><!--
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid MaximumRowsOrColumns="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="40,0"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>-->
+
+        <!--<ListView x:Name="MyLV" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible">
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40"/>
@@ -115,9 +162,9 @@
                     </Button.Background>
                 </Button>
             </Grid>
-            <!--<GridView x:Name="GridViewNotifications" ItemTemplate="{StaticResource namedNoteGridTemplate}"   ItemClick="colorsGridView_ItemClick" Margin="0,563,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
+            --><!--<GridView x:Name="GridViewNotifications" ItemTemplate="{StaticResource namedNoteGridTemplate}"   ItemClick="colorsGridView_ItemClick" Margin="0,563,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>--><!--
 
-        </ListView>
+        </ListView>-->
 
 
     </Grid>

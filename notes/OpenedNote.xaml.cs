@@ -89,7 +89,6 @@ namespace Notes
             {
                 Saving();
                 HomePage hp = new HomePage();
-                hp.Show();
                 
                 //Frame.Navigate(typeof(HomePage));
                 Frame.GoBack();

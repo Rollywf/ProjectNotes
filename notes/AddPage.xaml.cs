@@ -43,13 +43,14 @@ namespace Notes
             string textZ = TBZ.Text;
             string text = TBT.Text;
             // получаем локальную папку 
-
+            bool favorit = false;
             // создаем файл hello.txt
             StorageFile helloFile = await localFolder.CreateFileAsync(i + textZ + ".txt",
                                                 CreationCollisionOption.ReplaceExisting);
 
             await FileIO.AppendTextAsync(allnotes, i + textZ + "\n");
             await FileIO.AppendTextAsync(helloFile, "ID заметки: " + i +"\n");
+            await FileIO.AppendTextAsync(helloFile, "Favorite: " + favorit + "\n");
             await FileIO.AppendTextAsync(helloFile, "Заголовок заметки: " + textZ);
             await FileIO.AppendTextAsync(helloFile, "\n");
             await FileIO.AppendTextAsync(helloFile, "Текст заметки: " + text);
@@ -72,6 +73,7 @@ namespace Notes
             //string a = hour.SelectedValue.ToString();
             string textZ = TBZ.Text;
             string text = TBT.Text;
+            
             new ToastContentBuilder()
             .AddArgument("action", "viewItemsDueToday")
             .AddText(textZ)

@@ -2,6 +2,9 @@
     x:Class="notes.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:notes">
-
-</Application>
+    xmlns:local="using:notes"
+    xmlns:lol="using:Notes">
+    <Application.Resources>
+        <lol:FavoriteCommand x:Key="favoriteCommand"/>
+    </Application.Resources>
+</Application> 

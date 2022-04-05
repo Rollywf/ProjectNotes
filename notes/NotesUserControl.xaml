@@ -1,0 +1,24 @@
+﻿<UserControl
+    x:Class="Notes.NotesUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Notes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.ContextFlyout>
+        <MenuFlyout>
+            <MenuFlyoutItem Text="Favorite" Command="{StaticResource favoriteCommand}" CommandParameter="{x:Bind NotesTemp, Mode=OneWay}" />
+        </MenuFlyout>
+    </UserControl.ContextFlyout>
+    <Grid Margin="12,0,12,0">
+        <StackPanel Width="264" Height="120" Padding="12" Orientation="Horizontal" AutomationProperties.Name="{x:Bind NotesTemp.Title}">
+            <StackPanel Margin="16,1,0,0">
+                <TextBlock Width="176" Margin="0,0,0,2" TextWrapping="WrapWholeWords" TextTrimming="Clip" Text="{x:Bind NotesTemp.Title}" Height="Auto"/>
+                <TextBlock Width="176" Height="Auto" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" TextWrapping="WrapWholeWords" TextTrimming="Clip" Text="{x:Bind NotesTemp.Text}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

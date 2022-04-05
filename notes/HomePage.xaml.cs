@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
+using System.Windows.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -30,7 +32,37 @@ namespace Notes
     public sealed partial class HomePage : Page
     {
         List<IconFavorite> iconf = new List<IconFavorite>();
-        List<Notes> NamedColors = new List<Notes>();
+        List<NotesTemp> NamedColors = new List<NotesTemp>();
+
+
+        public static readonly DependencyProperty NoteObjectProperty =
+       DependencyProperty.Register(
+           "PodcastObject",
+           typeof(NoteObject),
+           typeof(HomePage),
+           new PropertyMetadata(null));
+
+        public NoteObject NoteObject
+        {
+            get { return (NoteObject)GetValue(NoteObjectProperty); }
+            set { SetValue(NoteObjectProperty, value); }
+        }
+
+
+
+        public static readonly DependencyProperty NotesProperty =
+       DependencyProperty.Register(
+           "NotesTemp",
+           typeof(NotesTemp),
+           typeof(HomePage),
+           new PropertyMetadata(null));
+
+        public NotesTemp NotesTemp
+        {
+            get { return (NotesTemp)GetValue(NotesProperty); }
+            set { SetValue(NotesProperty, value); }
+        }
+
 
         public HomePage()
         {
@@ -66,7 +98,16 @@ namespace Notes
                     //notetext=notetext.Replace("Текст заметки:", "");
                     //await new Windows.UI.Popups.MessageDialog("id заметки "+idnote).ShowAsync();
                     notetext.Remove("ID заметки: " + idnote);
-                    notetext.IndexOf("Заголовок заметки: ");
+                    try 
+                    { 
+                    notetext.Remove("Favorite: False");
+                    }
+                    catch 
+                    {
+                        notetext.Remove("Favorite: True");
+                    }
+
+                notetext.IndexOf("Заголовок заметки: ");
                     notetext.Remove("Текст заметки:");
                     //notetext.Remove("Заголовок заметки:");
                     //found = notetext.IndexOf(":");     
@@ -79,16 +120,12 @@ namespace Notes
                     //Console.WriteLine("   {0}", file.Substring(found + 1));
                     notet = notet.Substring(foud + 14);
                     int ind = 0;
-                    
+                    bool fav = false;
                     notetext[ind] = notetext[ind].Replace("Заголовок заметки: ", "");
-                    NamedColors.Add(new Notes(notetext[ind], notet, idnote));
-                    
+                    NamedColors.Add(new NotesTemp(notetext[ind], notet, idnote, fav));
+               
                     idnote++;
                     ind++;
-                    
-
-
-
                 }
                 //GridView abc = new GridView();
                 //Grid gridforone = new Grid();
@@ -116,16 +153,17 @@ namespace Notes
                 //gridforone.Children.Add(tt);
                 //G1.Children.Add(abc);
 
-
-
-                 colorsGridView.ItemsSource = NamedColors;
+                //await new Windows.UI.Popups.MessageDialog(NamedColors.ToString()).ShowAsync();
+                
+                //GVNotes.ItemsSource = NamedColors;
+                ListOfNotes.ItemsSource = NamedColors;
             }
             catch { }
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            Show();
+           
 
         }
 
@@ -133,48 +171,7 @@ namespace Notes
 
 
 
-        public async void Show()
-        {
-            try {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFile idfile = await localFolder.GetFileAsync("ids.txt");
-                StorageFile allnotes = await localFolder.GetFileAsync("allnotes.txt");
-                List<string> notename = (await FileIO.ReadLinesAsync(allnotes)).ToList(); ;
-                int i = Convert.ToInt32(await FileIO.ReadTextAsync(idfile));
-                //await new Windows.UI.Popups.MessageDialog(notename[4]).ShowAsync();
-                foreach (string file in notename)
-                {
-                    StorageFile note = await localFolder.GetFileAsync(file + ".txt");
-                    string notetext = await FileIO.ReadTextAsync(note);
-                    notetext = notetext.Replace("Заголовок заметки:", "");
-                    notetext = notetext.Replace("Текст заметки:", "");
-                    Button test = new Button();
-                    test.Content = notetext;
-
-                    //test.Template = btTemplate;
-                    //tb1.Text = notetext;
-                    double sizeHeight = 60;
-                    double sizeWidth = 150;
-                    test.Height = sizeHeight;
-                    test.Width = sizeWidth;
-                    //colorsListView.Items.Add(test);
-
-
-                }
-                //for(int g = 0; g <= i-1; g++) {
-
-                //StorageFile note = await localFolder.GetFileAsync(notename[g] + ".txt");
-                //string notetext = await FileIO.ReadTextAsync(note);              
-                //notetext = notetext.Replace("Заголовок заметки:", "");
-                //notetext = notetext.Replace("Текст заметки:", "");
-
-                //GV1.Items.Add(notetext);}
-            }
-            catch
-            {
-
-            }
-        }
+      
 
         private void colorsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -196,31 +193,83 @@ namespace Notes
 
         private void downbtn_Click(object sender, RoutedEventArgs e)
         {
-            if (colorsGridView.Visibility == Visibility.Visible)
-            {
+            //if (colorsGridView.Visibility == Visibility.Visible)
+            //{
 
-              //  i = colorsGridView.Height;
-               // colorsGridView.Height = 0;
-                colorsGridView.Visibility = Visibility.Collapsed;
-                upbtn.Visibility = Visibility.Visible;
-                downbtn.Visibility = Visibility.Collapsed;
+            //  //  i = colorsGridView.Height;
+            //   // colorsGridView.Height = 0;
+            //    colorsGridView.Visibility = Visibility.Collapsed;
+            //    upbtn.Visibility = Visibility.Visible;
+            //    downbtn.Visibility = Visibility.Collapsed;
 
-            }
-            else
+            //}
+            //else
+            //{
+            //    //colorsGridView.Height = i;
+            //    colorsGridView.Visibility = Visibility.Visible;
+            //    upbtn.Visibility = Visibility.Collapsed;
+            //    downbtn.Visibility = Visibility.Visible;
+            //}
+        }
+
+        private async void Favoriting()
+        {
+           
+            try
             {
-                //colorsGridView.Height = i;
-                colorsGridView.Visibility = Visibility.Visible;
-                upbtn.Visibility = Visibility.Collapsed;
-                downbtn.Visibility = Visibility.Visible;
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile allnotes = await localFolder.GetFileAsync("allnotes.txt");
+                List<string> notename = (await FileIO.ReadLinesAsync(allnotes)).ToList();
+                int foud = 0;
+                int idnote = 1;
+
+                foreach (string file in notename)
+                {
+                    int result;
+                    string resultString = string.Join(string.Empty, Regex.Matches(file, @"\d+").OfType<Match>().Select(m => m.Value));
+                    int.TryParse(resultString, out result);
+                    StorageFile note = await localFolder.GetFileAsync(file + ".txt");
+                    List<string> notetext = (await FileIO.ReadLinesAsync(note)).ToList();
+
+                    string favortext = await FileIO.ReadTextAsync(note);
+                    if (favortext.Contains("Favorite: False") == true) 
+                    {
+                        notetext.Remove("ID заметки: " + result);
+                        notetext.Remove("Favorite: False");
+                        notetext.IndexOf("Заголовок заметки: ");
+                        notetext.Remove("Текст заметки:");
+                        string notet = await FileIO.ReadTextAsync(note);
+                        notet = notet.Replace("Заголовок заметки:", "");
+                        foud = notet.IndexOf("Текст заметки:");
+                        notet = notet.Substring(foud + 14);
+                        int ind = 0;
+                        bool fav = true;
+                        notetext[ind] = notetext[ind].Replace("Заголовок заметки: ", "");
+                        idnote++;
+                        ind++;
+                        await FileIO.WriteTextAsync(note, "ID заметки: " + result + "\n");
+                        await FileIO.AppendTextAsync(note, "Favorite: " + fav + "\n");
+                        await FileIO.AppendTextAsync(note, "Заголовок заметки: " + notetext[ind]);
+                        await FileIO.AppendTextAsync(note, "\n");
+                        await FileIO.AppendTextAsync(note, "Текст заметки: " + notet);
+                        NamedColors.Add(new NotesTemp(notetext[ind],notet,result,fav));
+                    }
+                    else { }
+
+                }
+                ListOfNotes.ItemsSource = NamedColors;
             }
+            catch { }
         }
 
         public void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             MenuFlyoutItem root = (sender as MenuFlyoutItem);
-            // textForF = "Unfavorite";
             if (root.Text.ToString() == "Favorite") { 
                 root.Text = "Unfavorite";
+                Favoriting();
+                
+
             }
             else if (root.Text.ToString()== "Unfavorite")
             {
@@ -228,11 +277,11 @@ namespace Notes
             }
 
         }
-
+        
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void downbtn1_Click(object sender, RoutedEventArgs e)
@@ -259,7 +308,6 @@ namespace Notes
 
         private void butadd_Loaded(object sender, RoutedEventArgs e)
         {
-            //(sender as Button).;
         }
 
         private void Favorite_Loaded(object sender, RoutedEventArgs e)
@@ -279,7 +327,6 @@ namespace Notes
                 List<string> notename = (await FileIO.ReadLinesAsync(allnotes)).ToList();
             int idnote = 1;
             foreach(string file in notename) {
-                // await new Windows.UI.Popups.MessageDialog(notename[4]).ShowAsync();
                 if (file.Contains(idnote + abc) == true)
                 {
 
@@ -288,8 +335,7 @@ namespace Notes
 
                 }
                 else {
-                    //while (file.Contains(idnote + abc) == false)
-                    //{
+
                     if (file.Contains(idnote + abc) ==false)
                     {
                         idnote++;
@@ -301,34 +347,12 @@ namespace Notes
                             idnote1 = idnote;
 
                         }
-                            //idnote++;
-                       
-                   // }
+
                 }
             }
 
 
-            //    int idnote = 0;
-            //titleNote=NamedColors[0].Title;
-            //textNote = NamedColors[idnote].Text;
-            //idnote++;
-
-
-
-
-            //StorageFile idfile = await localFolder.GetFileAsync("ids.txt");
-            //StorageFile files = await localFolder.GetFileAsync("");
-
-            //int id = 1;
-            //for (int i = 0; i < id;id++) 
-            //{
-            // }  
-
-            //titleNote = NamedColors[0].Title;
-            // textNote = id + titleNote +".txt";
-            //await new Windows.UI.Popups.MessageDialog(textNote).ShowAsync();
-            //idnote = NamedColors[1-idnote].id_note;
-            //Frame.Navigate(typeof(OpenedNote), titleNote);
+           
             Frame.Navigate(typeof(OpenedNote), this);
             
         }
@@ -351,6 +375,84 @@ namespace Notes
 
         private void Root_Loaded(object sender, RoutedEventArgs e)
         {
+
+        }
+        private void StackPanel_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            
+            // var favoriteCommand = Application.Current.Resources["favoriteCommand"] as ICommand;
+            //favoriteCommand.Execute(NotesTemp);
+        }
+
+        private async void TextBlockTitle_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MenuFlyout menfav = new MenuFlyout();
+            MenuFlyoutItem Favorite = new MenuFlyoutItem();
+            Favorite.Text = "Favorite";
+            Favorite.Click +=MenuFlyoutItem_Click;
+
+            MenuFlyoutItem_Click( Favorite, e);
+            string a = (sender as TextBlock).Text;
+
+            try
+            {
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile allnotes = await localFolder.GetFileAsync("allnotes.txt");
+                List<string> notename = (await FileIO.ReadLinesAsync(allnotes)).ToList();
+                int foud = 0;
+                int idnote = 1;
+
+                foreach (string file in notename)
+                {
+                    int result;
+                    string resultString = string.Join(string.Empty, Regex.Matches(file, @"\d+").OfType<Match>().Select(m => m.Value));
+                    int.TryParse(resultString, out result);
+                    StorageFile note = await localFolder.GetFileAsync(file + ".txt");
+                    List<string> notetext = (await FileIO.ReadLinesAsync(note)).ToList();
+
+                    string favortext = await FileIO.ReadTextAsync(note);
+                    if (favortext.Contains(a) == true)
+                    {
+                        notetext.Remove("ID заметки: " + result);
+                        notetext.Remove("Favorite: False");
+                        notetext.IndexOf("Заголовок заметки: ");
+                        notetext.Remove("Текст заметки:");
+                        string notet = await FileIO.ReadTextAsync(note);
+                        notet = notet.Replace("Заголовок заметки:", "");
+                        foud = notet.IndexOf("Текст заметки:");
+                        notet = notet.Substring(foud + 14);
+                        int ind = 0;
+                        bool fav = true;
+                        notetext[ind] = notetext[ind].Replace("Заголовок заметки: ", "");
+                        idnote++;
+                        ind++;
+                        await FileIO.WriteTextAsync(note, "ID заметки: " + result + "\n");
+                        await FileIO.AppendTextAsync(note, "Favorite: " + fav + "\n");
+                        await FileIO.AppendTextAsync(note, "Заголовок заметки: " + notetext[ind]);
+                        await FileIO.AppendTextAsync(note, "\n");
+                        await FileIO.AppendTextAsync(note, "Текст заметки: " + notet);
+                        NamedColors.Add(new NotesTemp(notetext[ind], notet, result, fav));
+                    }
+                    else { }
+
+                }
+                ListOfNotes.ItemsSource = NamedColors;
+            }
+            catch { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         }
     }

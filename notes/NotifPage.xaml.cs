@@ -27,7 +27,7 @@ namespace Notes
     /// </summary>
     public sealed partial class NotifPage : Page
     {
-        List<Notes> NamedColors = new List<Notes>();
+        List<NotesTemp> NamedColors = new List<NotesTemp>();
         
         public NotifPage()
         {
@@ -65,13 +65,13 @@ namespace Notes
 
                     int ind = 0;
                     notetext[ind] = notetext[ind].Replace("Заголовок Уведомления: ", "");
-                    NamedColors.Add(new Notes(notetext[ind], notet, ind));
+                    NamedColors.Add(new NotesTemp(notetext[ind], notet, ind, false));
                     ind++;
 
 
                 }
 
-                colorsGridView.ItemsSource = NamedColors;
+                //colorsGridView.ItemsSource = NamedColors;
             }
             catch { }
         }

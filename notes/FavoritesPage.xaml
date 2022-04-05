@@ -11,7 +11,7 @@
     <Page.Resources>
         <ImageBrush x:Key="ButtonBackground1" ImageSource="/Assets/plusIcon.png" Stretch="UniformToFill"/>
         <ImageSource x:Key="ImageBrushImageSource1">/Assets/plusIconWhite.png</ImageSource>
-        <DataTemplate x:Key="namedColorItemGridTemplate" x:DataType="local:Notes">
+        <!--<DataTemplate x:Key="namedColorItemGridTemplate" x:DataType="local:Notes">
             <Grid Height="109" Width="230" Tapped="Grid_Tapped">
 
                 <Grid.ColumnDefinitions>
@@ -23,12 +23,12 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Rectangle Width="96" Height="96"  Grid.ColumnSpan="3" />
-                <!-- Name -->
+                --><!-- Name --><!--
 
                 <Border Background="#AAFFFFFF" Grid.ColumnSpan="2" Height="20" VerticalAlignment="Center" Tapped="Border_Tapped">
                     <TextBlock Text="{x:Bind Path=Title}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Border>
-                <!--Not1-->
+                --><!--Not1--><!--
                 <Border Background="Gray" Grid.Row="2" Grid.ColumnSpan="3">
                     <TextBlock Text="{x:Bind Path=Text}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11"/>
                 </Border>
@@ -45,7 +45,7 @@
                     </Button.Flyout>
                 </Button>
             </Grid>
-        </DataTemplate>
+        </DataTemplate>-->
     </Page.Resources>
 
     <Grid x:Name="G1" Loaded="Grid_Loaded" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="1080">
@@ -59,7 +59,37 @@
         <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid Background="#FF3B3E49" Height="50" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         </Border>
-        <GridView x:Name="colorsGridView" ItemTemplate="{StaticResource namedColorItemGridTemplate}" Margin="10,10,10,10" Grid.Row="1" ItemClick="colorsGridView_ItemClick" Tapped="colorsGridView_Tapped"/>
-
+        <ItemsControl x:Name="favoriteControl">
+            
+        </ItemsControl>
+        
+        <GridView x:Name="ListOfNotes1"
+            ItemsSource="{x:Bind NotesTemp}" Grid.Row="1">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="local:NotesTemp">
+                    <StackPanel Width="264" Height="120" Padding="12" Orientation="Horizontal" AutomationProperties.Name="{x:Bind Title}">
+                        <StackPanel Margin="16,1,0,0" RightTapped="StackPanel_RightTapped">
+                            <StackPanel.ContextFlyout>
+                                <MenuFlyout x:Name="menfav">
+                                    <MenuFlyoutItem x:Name="Favorite" Text="Unfavorite" Icon="Favorite" Click="MenuFlyoutItem_Click" Loaded="Favorite_Loaded" >
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </StackPanel.ContextFlyout>
+                            <TextBlock Width="176" Margin="0,0,0,2" TextWrapping="WrapWholeWords" TextTrimming="Clip" Text="{x:Bind Title}" Height="Auto"/>
+                            <TextBlock Width="176" Height="Auto" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" TextWrapping="WrapWholeWords" TextTrimming="Clip" Text="{x:Bind Text}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <!--<local:NotesUserControl NotesTemp="{x:Bind Mode=OneWay}" />-->
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemContainerStyle>
+                <!--The PodcastUserControl will entirely fill the ListView item and handle tabbing within itself.-->
+                <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="IsTabStop" Value="False"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+        </GridView>
     </Grid>
 </Page>

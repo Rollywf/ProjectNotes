@@ -10,7 +10,7 @@
     <Page.Resources>
         <ImageBrush x:Key="ButtonBackground1" ImageSource="/Assets/plusIcon.png" Stretch="UniformToFill"/>
         <ImageSource x:Key="ImageBrushImageSource1">/Assets/plusIconWhite.png</ImageSource>
-        <DataTemplate x:Key="namedColorItemGridTemplate" x:DataType="local:Notes">
+        <!--<DataTemplate x:Key="namedColorItemGridTemplate" x:DataType="local:Notes">
 
             <Grid  Height="100" Width="200" Tapped="Grid_Tapped" RightTapped="Grid_RightTapped">
 
@@ -42,18 +42,18 @@
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                 </Rectangle>
-                <!-- Name -->
+                --><!-- Name --><!--
 
                 <Border Background="#AAFFFFFF" Grid.ColumnSpan="3" Height="20" VerticalAlignment="Top" Tapped="Border_Tapped">
                     <TextBlock Text="{x:Bind Path=Title}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14"/>
                 </Border>
-                <!--Not1-->
+                --><!--Not1--><!--
                 <Border Background="Gray" Grid.Row="2" Grid.ColumnSpan="3">
                     <TextBlock Text="{x:Bind Path=Text}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11"/>
                 </Border>
 
             </Grid>
-        </DataTemplate>
+        </DataTemplate>-->
     </Page.Resources>
 
     <Grid x:Name="G1" Loaded="Grid_Loaded" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -64,24 +64,22 @@
             <RowDefinition Height="50" />
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid Background="#FF3B3E49" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50.1">
-                <Button x:Name="butadd" Click="butadd_Click" Tag="add" Margin="1820,0,0,-1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50.5" Width="100"  >
 
-                    <Grid Width="90" Height="50" Margin="-10,-6,-10,-7">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Image Source="Assets/plusIconWhite1.png" Height="50" Width="50" HorizontalAlignment="Stretch"/>
-                        <Border Height="50" Width="40" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <TextBlock Height="20" Width="30" Text="Add" Foreground="White" HorizontalAlignment="Stretch" FontSize="14" VerticalAlignment="Stretch" Margin="0,14,0,0"/>
-                        </Border>
-                    </Grid>
-                </Button>
-            </Grid>
-        </Border>
-        <GridView x:Name="colorsGridView" ItemTemplate="{StaticResource namedColorItemGridTemplate}" Margin="10,10,10,10" Grid.Row="1" ItemClick="colorsGridView_ItemClick" Tapped="colorsGridView_Tapped"/>
+        <Grid Background="#FF434759" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button  x:Name="butadd"  Height="50" Click="butadd_Click" Tag="add" Width="101" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="Assets/plusIconWhite1.png" Width="50"/>
+                    <TextBlock Text="Add" Foreground="White" FontSize="14" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                </Grid>
+            </Button>
+        </Grid>
+
+        <!--<GridView x:Name="colorsGridView" ItemTemplate="{StaticResource namedColorItemGridTemplate}" Margin="10,10,10,10" Grid.Row="1" ItemClick="colorsGridView_ItemClick" Tapped="colorsGridView_Tapped"/>-->
 
     </Grid>
 </Page>

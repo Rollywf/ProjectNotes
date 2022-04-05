@@ -129,10 +129,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FavoriteCommand.cs" />
     <Compile Include="FavoritesPage.xaml.cs">
       <DependentUpon>FavoritesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="IconFavorite.cs" />
+    <Compile Include="NoteObject.cs" />
+    <Compile Include="NotesUserControl.xaml.cs">
+      <DependentUpon>NotesUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NotifPage.xaml.cs">
       <DependentUpon>NotifPage.xaml</DependentUpon>
     </Compile>
@@ -142,7 +147,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Notes.cs" />
+    <Compile Include="NotesTemp.cs" />
     <Compile Include="NoteEdits.xaml.cs">
       <DependentUpon>NoteEdits.xaml</DependentUpon>
     </Compile>
@@ -185,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FavoritesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NotesUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
