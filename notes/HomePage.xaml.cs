@@ -1,13 +1,16 @@
-﻿using notes;
+﻿using Microsoft.VisualStudio.PlatformUI;
+using notes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using System.Windows;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -20,17 +23,16 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using Xamarin.Forms.Platform.UWP;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Notes
 {
-    /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
-    /// </summary>
+
+
     public sealed partial class HomePage : Page
     {
+        public ObservableCollection<Note> Notes { get; set; }
         List<IconFavorite> iconf = new List<IconFavorite>();
         List<NotesTemp> NamedColors = new List<NotesTemp>();
 
@@ -63,11 +65,55 @@ namespace Notes
             set { SetValue(NotesProperty, value); }
         }
 
+        public async void LoadingNotesList()
+        {
+            try
+            {
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile allnotes = await localFolder.GetFileAsync("allnotes.txt");
+                List<string> notename = (await FileIO.ReadLinesAsync(allnotes)).ToList();
+                int foud = 0;
+                int idnote = 1;
+
+                foreach (string file in notename)
+                {
+
+                    StorageFile note = await localFolder.GetFileAsync(file + ".txt");
+                    List<string> notetext = (await FileIO.ReadLinesAsync(note)).ToList();
+                    notetext.Remove("ID заметки: " + idnote);
+                    notetext.Remove("Favorite: False");
+                    notetext.Remove("Favorite: True");    
+                    //notetext.IndexOf("Заголовок заметки: ");
+                    notetext.Remove("Текст заметки: ");
+                    //notetext.Remove("Заголовок заметки:");
+                    //found = notetext.IndexOf(":");     
+                    //Console.WriteLine("   {0}", file.Substring(found + 1));
+                    // notetext = notetext.Substring(found+1);
+                    string notet = await FileIO.ReadTextAsync(note);
+                    // notetext = notetext.Replace("Заголовок заметки:", "");
+                    notet = notet.Replace("Заголовок заметки: ", "");
+                    foud = notet.IndexOf("Текст заметки: ");
+                    //Console.WriteLine("   {0}", file.Substring(found + 1));
+                    notet = notet.Substring(foud + 14);
+                    int ind = 0;
+                    bool fav = false;
+                    //notetext.Remove("Заголовок заметки: ");
+                    notetext[ind] = notetext[ind].Replace("Заголовок заметки: ", "");
+                    Notes.Add(new Note {Title= notetext[ind], Text=notet });
+                    idnote++;
+                    ind++;
+                }
+            }
+            catch { }
+        }
 
         public HomePage()
-        {
+        {    Notes = new ObservableCollection<Note>();
+            LoadingNotesList();
+          
             this.InitializeComponent();
-            LoadNotes();
+           
+            //LoadNotes();
         }
 
 
@@ -167,11 +213,6 @@ namespace Notes
 
         }
 
-
-
-
-
-      
 
         private void colorsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -454,6 +495,16 @@ namespace Notes
 
 
 
+        }
+
+        private void Root_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

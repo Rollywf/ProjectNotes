@@ -31,10 +31,6 @@ namespace Notes
         int i;
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-
-
-
-
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             StorageFile idfile = await localFolder.GetFileAsync("ids.txt");
             StorageFile allnotes = await localFolder.GetFileAsync("allnotes.txt");

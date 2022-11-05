@@ -8,7 +8,7 @@
     x:Class="Notes.HomePage"
     mc:Ignorable="d"
     Background="#FF30323C"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-   
+
     <Page.Resources>
         <local:FavoriteCommand x:Key="favoriteCommand"/>
         <ImageBrush x:Key="ButtonBackground1" ImageSource="/Assets/plusIcon.png" Stretch="UniformToFill"/>
@@ -25,12 +25,9 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Rectangle Width="96" Height="96"  Grid.ColumnSpan="3" />
-                --><!-- Name --><!--
-
                 <Border Background="#AAFFFFFF" Grid.ColumnSpan="2" Height="20" VerticalAlignment="Center">
                     <TextBlock x:Name="nameNote" Text="{x:Bind Path=Title}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Tapped="nameNote_Tapped"/>
                 </Border>
-                --><!--Not1--><!--
                 <Border Background="Gray" Grid.Row="2" Grid.ColumnSpan="3">
                     <TextBlock x:Name="textNote" Text="{x:Bind Path=Text}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11" Loaded="textNote_Loaded"/>
                 </Border>
@@ -47,6 +44,10 @@
         </DataTemplate>-->
     </Page.Resources>
 
+    <Page.DataContext>
+        <local:HomePageModel/>
+    </Page.DataContext>
+    
     <Grid x:Name="G1" Loaded="Grid_Loaded">
         <Grid.Background>
             <ImageBrush Stretch="UniformToFill"/>
@@ -57,22 +58,62 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Border Background="#FF434759">
-            <Button  x:Name="butadd"  Height="40" Click="butadd_Click" Tag="add" Margin="0,0,0,0" Width="101" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Image Source="Assets/plusIconWhite1.png" Width="50"/>
-                    <TextBlock Text="Add" Foreground="White" FontSize="14" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button  x:Name="butadd"  Height="40" Click="butadd_Click" Tag="add" Margin="0,0,0,0" Width="101" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="Assets/plusIconWhite1.png" Width="50"/>
+                        <TextBlock Text="Add" Foreground="White" FontSize="14" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                </Grid>
-            </Button>
+                    </Grid>
+                </Button>
             </Border>
         </Grid>
-
-
-        <GridView x:Name="ListOfNotes"
+        
+        <GridView x:Name="ListOfNotes" Grid.Row="1" ItemsSource="{Binding Notes}">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:Name="Root" Height="109" Width="230" Tapped="Grid_Tapped" Loaded="Root_Loaded" RightTapped="Root_RightTapped">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Rectangle Width="96" Height="96"  Grid.ColumnSpan="3" />
+                        <Border Background="#AAFFFFFF" Grid.ColumnSpan="2" Height="20" VerticalAlignment="Center">
+                            <TextBlock x:Name="nameNote" Text="{Binding Title}" TextWrapping="Wrap" Margin="4,0,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Tapped="nameNote_Tapped"/>
+                        </Border>
+                        <Border Background="Gray" Grid.Row="2" Grid.ColumnSpan="3">
+                            <TextBlock x:Name="textNote" Text="{Binding Text}" Margin="4,0,0,0" Foreground="DarkGray" FontSize="11" Loaded="textNote_Loaded"/>
+                        </Border>
+                        <Grid.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem x:Name="Favorite" Text="Favorite" Icon="Favorite" Click="MenuFlyoutItem_Click" Loaded="Favorite_Loaded" >
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem x:Name="Delete" Text="Delete" Icon="Delete" Command="{Binding DataContext.RemoveCommand,RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem x:Name="Change" Text="Change" Icon="Edit">
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </Grid.ContextFlyout>
+                        <!--<Button Loaded="butadd_Loaded" x:Name="btngrid" Content="A" Height="20" Width="30" FontSize="4" Foreground="#FF131010" Grid.Column="1" Background="#33FF2727" Click="Button_Click_1">
+                            <Button.Flyout >
+                                <MenuFlyout x:Name="menf">
+                                    <MenuFlyoutItem x:Name="Favorite" Text="Favorite" Icon="Favorite" Click="MenuFlyoutItem_Click" Loaded="Favorite_Loaded" >
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>-->
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        <!--<GridView x:Name="ListOfNotes"
             ItemsSource="{x:Bind NotesTemp}" Grid.Row="1">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="local:NotesTemp">
@@ -88,18 +129,18 @@
                             <TextBlock Width="176" Height="Auto" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" TextWrapping="WrapWholeWords" TextTrimming="Clip" Text="{x:Bind Text}" />
                         </StackPanel>
                     </StackPanel>
-                    <!--<local:NotesUserControl NotesTemp="{x:Bind Mode=OneWay}" />-->
+                    <!<local:NotesUserControl NotesTemp="{x:Bind Mode=OneWay}" />--><!--
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemContainerStyle>
-                 <!--The PodcastUserControl will entirely fill the ListView item and handle tabbing within itself.--> 
+                 --><!--The PodcastUserControl will entirely fill the ListView item and handle tabbing within itself.--><!-- 
                 <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="Padding" Value="0"/>
                     <Setter Property="IsTabStop" Value="False"/>
                 </Style>
             </GridView.ItemContainerStyle>
-        </GridView>
+        </GridView>-->
 
 
         <!--<GridView x:Name="GVNotes" ItemsSource="{x:Bind NotesTemp}" Grid.Row="1">
